@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: ConSenPy
+Version: 1.0.0
+Summary: ConSenPy: detecting context-specific senescence genes from single-cell and spatial transcriptomics
+Author: Hongyu Zhao
+Requires-Dist: pyro-ppl==1.9.1
+Requires-Dist: numpy==1.23.5
+Requires-Dist: pandas==2.3.3
+Requires-Dist: scanpy==1.10.3
+Requires-Dist: anndata==0.10.9
+Requires-Dist: scipy==1.11.4
+Requires-Dist: scikit-learn==1.6.1
+Requires-Dist: statsmodels==0.14.1
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: summary

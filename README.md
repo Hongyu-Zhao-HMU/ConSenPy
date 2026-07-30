@@ -1,0 +1,89 @@
+# ConSenPy: detecting context-specific senescence genes from single-cell and spatial transcriptomics
+<p align="center">
+  <img src="docs/ConSenPy_Overview.png" alt="Overview" width="600">
+</p>
+
+
+
+
+## 📦 Installation
+
+### 1. Create a clean python environment
+
+We recommend starting from a clean conda environment to avoid potential dependency conflicts.
+
+```bash
+conda create -n ConSenPy python=3.9
+conda activate ConSenPy
+```
+
+### 2. Install pytorch
+
+For GPU acceleration, please install the appropriate PyTorch version according to your CUDA version.
+
+
+```bash
+pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu121
+```
+
+### 3. Install ConSenPy
+
+```bash
+pip install git+https://github.com/Hongyu-Zhao/ConSenPy.git
+```
+
+## 📖 Usage
+
+Run ConSenPy in Python.
+
+### Import ConSenPy
+
+```python
+import scanpy as sc
+from ConSenPy import (
+    preprocess_data,
+    calculate_cell_senescence_scores,
+    calculate_differential_sgs
+)
+```
+
+### Load and preprocess single cell data
+
+```python
+adata = sc.read_h5ad("path/to/your_data.h5ad")
+
+adata = preprocess_data(adata)
+```
+
+### Calculate cellular senescence scores
+
+```python
+adata = calculate_cell_senescence_scores(adata)
+```
+
+The predicted senescence scores are stored in:
+
+```python
+adata.obs["SenseScore"]
+```
+
+### Identify context-specific senescence genes (ConSene-genes)
+
+```python
+ConSene-genes = calculate_differential_sgs(
+    adata,
+    groupby="condition",
+    label_1="cond.1",
+    label_2="cond.2",
+    condition_filter="cond.1/cond.2/both"
+)
+```
+
+Save identified ConSene-genes:
+
+```python
+ConSene-genes.to_csv(
+    "ConSene-genes.csv",
+    index_label="Gene"
+)
+```
