@@ -29,7 +29,7 @@ pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu121
 ### 3. Install ConSenPy
 
 ```bash
-pip install git+https://github.com/Hongyu-Zhao/ConSenPy.git
+pip install git+https://github.com/Hongyu-Zhao-HMU/ConSenPy.git
 ```
 
 ## 📖 Usage
