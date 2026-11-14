@@ -235,7 +235,6 @@ def compute_bulk_similarity_score(adata_st, adata_bulk, bulk_labels):
     corr_non = cov_non / (std_st * std_non + 1e-8)
     s = corr_sen - corr_non
     s_normalized = (s - np.nanmin(s)) / (np.nanmax(s) - np.nanmin(s) + 1e-8)
-
     return s_normalized
 
 def logistic_regression_scoring(Z, s_score, top_percent=10, bottom_percent=10):
@@ -247,25 +246,25 @@ def logistic_regression_scoring(Z, s_score, top_percent=10, bottom_percent=10):
     y_train = np.array([1] * len(high_idx) + [0] * len(low_idx))
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
-    clf = LogisticRegression(penalty='l1', solver='liblinear', C=0.1, max_iter=1000)
+    clf = LogisticRegression(penalty='l1', random_state=12,solver='liblinear', C=0.1, max_iter=1000)
     clf.fit(X_train_scaled, y_train)
     coef = clf.coef_[0]
     Z_scaled = scaler.transform(Z)
     final_score = Z_scaled @ coef
-    final_score = (final_score - final_score.min()) / (final_score.max() - final_score.min() + 1e-8)
     return final_score
 
 
-def _compute_core_sgs(X_bin_T, bin_labels):
+def _compute_core_sgs(X_bin_T, bin_labels, n_bins=5):
     n_samples = X_bin_T.shape[1]
-    Y = sp.csr_matrix((np.ones(n_samples, dtype=np.float64),(np.arange(n_samples), bin_labels)),shape=(n_samples, 5))
+    Y = sp.csr_matrix((np.ones(n_samples, dtype=np.float64), (np.arange(n_samples), bin_labels)),
+                      shape=(n_samples, n_bins))
     P_count = X_bin_T.dot(Y).toarray()
-    bin_sizes = np.bincount(bin_labels, minlength=5)
+    bin_sizes = np.bincount(bin_labels, minlength=n_bins)
     bin_sizes[bin_sizes == 0] = 1
     P = P_count / bin_sizes
     P_pct = P * 100
     p_young = P_pct[:, 0]
-    p_old = P_pct[:, 4]
+    p_old = P_pct[:, n_bins - 1]
 
     # ========== old(x) ==========
     x_old = p_old
