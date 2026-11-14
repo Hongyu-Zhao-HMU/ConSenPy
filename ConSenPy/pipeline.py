@@ -221,7 +221,7 @@ def calculate_differential_sgs(adata_sc, groupby="Condition", label_1="Cond.1", 
         p_values = stats.ttest_ind(sgs_matrix_1[:, keep_genes_idx],
                                    sgs_matrix_2[:, keep_genes_idx],
                                    axis=0, equal_var=False)[1]
-    _, p_adj, _, _ = multipletests(p_values, alpha=0.05, level='fdr_bh')
+    _, p_adj, _, _ = multipletests(p_values, alpha=0.05, method='fdr_bh')
     dynamic_trends = np.where(delta_actual_filtered > 0, "Stronger", "Weaker")
     result_df = pd.DataFrame({
         'Gene': var_idx_all[keep_genes_idx],
