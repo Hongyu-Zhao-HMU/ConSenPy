@@ -1,4 +1,4 @@
-# ConSenPy: detecting context-specific senescence genes from single-cell and spatial transcriptomics
+# ConSenPy: detecting context-specific senescence programs from single-cell and spatial transcriptomics
 <p align="center">
   <img src="docs/ConSenPy_Overview.png" alt="Overview" width="800">
 </p>
