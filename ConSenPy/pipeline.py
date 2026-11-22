@@ -14,6 +14,7 @@ def preprocess_data(adata_sc):
     """
         Preparing model training data ...
     """
+    adata_sc = adata_sc.copy()
     sc.pp.filter_genes(adata_sc, min_cells=max(10, int(adata_sc.n_obs * 0.001)))
     if "counts" not in adata_sc.layers:
         adata_sc.layers["counts"] = adata_sc.X.copy()
